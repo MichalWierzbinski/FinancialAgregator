@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FinancialAgregator</string>
+
+    <string name="info_title">Informacje o aplikacji</string>
+    <string name="info_p1">Autorzy:</string>
+    <string name="info_p2">Michał Wierzbiński \nJarosław Valentynskyy \nFilip Wiśniowski \nKamil Wanat</string>
+    <string name="info_p3">Opis aplikacji:</string>
+    <string name="info_p4">Aplikacja jest agregatorem wiadomości o tematyce finansowej. Wiadomości te są pobierane z różnych portali informacyjnych w postaci plików RSS. Aplikacja ta przeznaczona jest dla osób chcących być na bieżąco ze światem finansów.</string>
+
+</resources>
