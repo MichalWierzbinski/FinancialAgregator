@@ -16,6 +16,12 @@ import android.widget.ListView;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String EXTRA_LINK = "EXTRA_LINK";
+    public static final String EXTRA_PUB_DATE = "EXTRA_PUB_DATE";
+    public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
+
     private ListView listView;
     private View view;
 
