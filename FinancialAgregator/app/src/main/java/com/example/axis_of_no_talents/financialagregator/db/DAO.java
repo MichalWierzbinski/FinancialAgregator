@@ -8,14 +8,15 @@ import com.example.axis_of_no_talents.financialagregator.RssItem;
 import static android.content.ContentValues.TAG;
 
 public class DAO {
-    private DBHelper dhelper;
+
+    private Context context;
 
     public DAO(Context c){
-        dhelper = new DBHelper(c);
+        context =c;
     }
 
     public void addItem(RssItem item) {
-        SQLiteDatabase db = dhelper.getWritableDatabase();
+        SQLiteDatabase db = DBHelper.getInstance(context).getWritableDatabase();
 
         db.beginTransaction();
         try {
