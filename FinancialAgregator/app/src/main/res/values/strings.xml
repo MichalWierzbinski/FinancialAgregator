@@ -7,5 +7,10 @@
     <string name="info_p3">Opis aplikacji:</string>
     <string name="info_p4">Aplikacja jest agregatorem wiadomości o tematyce finansowej. Wiadomości te są pobierane z różnych portali informacyjnych w postaci plików RSS. Aplikacja ta przeznaczona jest dla osób chcących być na bieżąco ze światem finansów.</string>
     <string name="more">Więcej</string>
+    <string name="categories_title">Lista kategorii</string>
+    <string name="biznes_interia_pl">biznes.interia.pl</string>
+    <string name="finanse_wp_pl">finanse.wp.pl</string>
+    <string name="www_bankier_pl">www.bankier.pl</string>
+    <string name="www_money_pl">www.money.pl</string>
 
 </resources>

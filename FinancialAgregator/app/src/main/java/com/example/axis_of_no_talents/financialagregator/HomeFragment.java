@@ -30,10 +30,10 @@ import java.util.Map;
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
     public static final String TAG = "[HomeFragment]";
 
-    public static final String EXTRA_TITLE = "com.kurekhub.rssfinancialreader.EXTRA_TITLE";
-    public static final String EXTRA_LINK = "com.kurekhub.rssfinancialreader.EXTRA_LINK";
-    public static final String EXTRA_PUB_DATE = "com.kurekhub.rssfinancialreader.EXTRA_PUB_DATE";
-    public static final String EXTRA_DESCRIPTION = "com.kurekhub.rssfinancialreader.EXTRA_DESCRIPTION";
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String EXTRA_LINK = "EXTRA_LINK";
+    public static final String EXTRA_PUB_DATE = "EXTRA_PUB_DATE";
+    public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
     private ListView listView;
     private View view;
     private ProgressBar progressBar;
