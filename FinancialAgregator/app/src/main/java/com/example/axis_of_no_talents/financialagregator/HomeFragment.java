@@ -1,7 +1,10 @@
 package com.example.axis_of_no_talents.financialagregator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -40,6 +43,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             view = inflater.inflate(R.layout.fragment_home, container, false);
             listView = (ListView) view.findViewById(R.id.rss_list);
             listView.setOnItemClickListener(this);
+            if(isOnline()) {
+                startService();
+            }
+
 
         } else {
             ViewGroup parent = (ViewGroup) view.getParent();
@@ -53,8 +60,17 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         return view;
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+
     private void startService() {
-        //todo logic
+        Intent intent = new Intent(getActivity(), RssService.class);
+        intent.putExtra(RssService.RECEIVER, resultReceiver);
+        getActivity().startService(intent);
     }
 
     private void updateNewsView(String searchQuery) {
