@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.ResultReceiver;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +28,20 @@ import java.util.Map;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
+    public static final String TAG = "[HomeFragment]";
 
-    public static final String EXTRA_TITLE = "EXTRA_TITLE";
-    public static final String EXTRA_LINK = "EXTRA_LINK";
-    public static final String EXTRA_PUB_DATE = "EXTRA_PUB_DATE";
-    public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
-
+    public static final String EXTRA_TITLE = "com.kurekhub.rssfinancialreader.EXTRA_TITLE";
+    public static final String EXTRA_LINK = "com.kurekhub.rssfinancialreader.EXTRA_LINK";
+    public static final String EXTRA_PUB_DATE = "com.kurekhub.rssfinancialreader.EXTRA_PUB_DATE";
+    public static final String EXTRA_DESCRIPTION = "com.kurekhub.rssfinancialreader.EXTRA_DESCRIPTION";
+    private ProgressBar progressBar;
     private ListView listView;
     private View view;
     private ProgressBar progressBar;
 
 
     private SharedPreferences preferences;
+    private Map<String, ?> availableSites;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_home, container, false);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             listView = (ListView) view.findViewById(R.id.rss_list);
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             listView.setOnItemClickListener(this);
@@ -64,8 +69,27 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         }
 
         EditText searchInput = (EditText) view.findViewById(R.id.search_input);
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateNewsView(s.toString());
+            }
+        });
 
         preferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        availableSites = preferences.getAll();
+
+        if(!isOnline()) {
+            updateNewsView(null);
+        }
 
         return view;
     }
@@ -112,6 +136,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //todo logic
+        NewsAdapter adapter = (NewsAdapter) parent.getAdapter();
+        RssItem item = (RssItem) adapter.getItem(position);
+        Intent intent = new Intent(getActivity(), ItemDetailsActivity.class);
+        intent.putExtra(EXTRA_TITLE, item.getTitle());
+        intent.putExtra(EXTRA_LINK, item.getLink());
+        intent.putExtra(EXTRA_PUB_DATE, item.getPubDate());
+        intent.putExtra(EXTRA_DESCRIPTION, item.getDescription());
+        startActivity(intent);
     }
 }
