@@ -115,10 +115,36 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         String categoriesQuery = "";
         boolean categoriesFirst = true;
+        for(Map.Entry<String, ?> entry : availableSites.entrySet()) {
+            if(entry.getValue().equals(true)) {
+                if(categoriesFirst) {
+                    categoriesQuery += " link LIKE '%" + entry.getKey() + "%'";
+                    categoriesFirst = false;
+                }
+                else {
+                    categoriesQuery += " OR link LIKE '%" + entry.getKey() + "%'";
+                }
+            }
+        }
 
-        //todo Categories nd search logic
+        if(searchQuery == null) {
+            if(categoriesFirst) {
+                sqlQuery = "SELECT * FROM rss_feeder ORDER BY _id ASC";
+            }
+            else {
+                sqlQuery = "SELECT * FROM rss_feeder WHERE " + categoriesQuery + " ORDER BY _id ASC";
+            }
+        }
+        else {
+            if(categoriesFirst) {
+                sqlQuery = "SELECT * FROM rss_feeder WHERE title LIKE '%" + searchQuery + "%' ORDER BY _id ASC";
+            }
+            else {
+                sqlQuery = "SELECT * FROM rss_feeder WHERE (" + categoriesQuery + ") AND title LIKE '%" + searchQuery + "%' ORDER BY _id ASC";
+            }
+        }
+        Cursor rssCursor = db.rawQuery(sqlQuery, null);
 
-        Cursor rssCursor = db.rawQuery("SELECT * FROM rss_feeder ORDER BY _id ASC", null);
         NewsAdapter newsAdapter = new NewsAdapter(getActivity(), rssCursor);
         listView.setAdapter(newsAdapter);
         progressBar.setVisibility(View.GONE);
