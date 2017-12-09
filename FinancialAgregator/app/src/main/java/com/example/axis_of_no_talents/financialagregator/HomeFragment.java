@@ -34,7 +34,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public static final String EXTRA_LINK = "com.kurekhub.rssfinancialreader.EXTRA_LINK";
     public static final String EXTRA_PUB_DATE = "com.kurekhub.rssfinancialreader.EXTRA_PUB_DATE";
     public static final String EXTRA_DESCRIPTION = "com.kurekhub.rssfinancialreader.EXTRA_DESCRIPTION";
-    private ProgressBar progressBar;
     private ListView listView;
     private View view;
     private ProgressBar progressBar;
