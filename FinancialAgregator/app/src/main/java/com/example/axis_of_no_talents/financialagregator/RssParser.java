@@ -1,9 +1,11 @@
-package com.kurekhub.rssfinancialreader;
+package com.example.axis_of_no_talents.financialagregator;
 
 import android.content.Context;
 import android.util.Xml;
 
-import com.kurekhub.rssfinancialreader.database.RssFeederDbHelper;
+
+import com.example.axis_of_no_talents.financialagregator.db.DAO;
+import com.example.axis_of_no_talents.financialagregator.db.DBHelper;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -15,10 +17,12 @@ import java.util.List;
 
 public class RssParser {
     private final String ns = null;
-    private RssFeederDbHelper dbHelper;
+    private DBHelper dbHelper;
+    private DAO dao;
 
     public RssParser(Context applicationContext) {
-        dbHelper = RssFeederDbHelper.getInstance(applicationContext);
+        dbHelper = DBHelper.getInstance(applicationContext);
+        dao = new DAO(applicationContext);
     }
 
     public List<RssItem> parse(InputStream inputStream) throws XmlPullParserException, IOException {
@@ -63,7 +67,7 @@ public class RssParser {
             if (title != null && link != null && pubDate != null && description != null) {
                 RssItem item = new RssItem(title, link, pubDate, description);
                 items.add(item);
-                dbHelper.addItem(item);
+                dao.addItem(item);
                 title = null;
                 link = null;
                 pubDate = null;

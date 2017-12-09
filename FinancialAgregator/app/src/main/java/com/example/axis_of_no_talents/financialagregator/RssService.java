@@ -1,5 +1,4 @@
-package com.kurekhub.rssfinancialreader;
-
+package com.example.axis_of_no_talents.financialagregator;
 
 import android.app.IntentService;
 import android.content.Intent;

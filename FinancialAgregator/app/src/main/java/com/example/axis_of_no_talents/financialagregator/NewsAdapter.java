@@ -1,4 +1,4 @@
-package com.kurekhub.rssfinancialreader;
+package com.example.axis_of_no_talents.financialagregator;
 
 import android.content.Context;
 import android.database.Cursor;
