@@ -3,6 +3,8 @@ package com.example.axis_of_no_talents.financialagregator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +18,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
+import com.example.axis_of_no_talents.financialagregator.db.DBHelper;
+
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -27,6 +34,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     private ListView listView;
     private View view;
+    private ProgressBar progressBar;
+
 
     private SharedPreferences preferences;
 
@@ -42,6 +51,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_home, container, false);
             listView = (ListView) view.findViewById(R.id.rss_list);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             listView.setOnItemClickListener(this);
             if(isOnline()) {
                 startService();
@@ -74,7 +84,23 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     private void updateNewsView(String searchQuery) {
-        //todo logic
+        progressBar.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        DBHelper handler = DBHelper.getInstance(getActivity());
+        SQLiteDatabase db = handler.getWritableDatabase();
+        String sqlQuery;
+
+        String categoriesQuery = "";
+        boolean categoriesFirst = true;
+
+        //todo Categories nd search logic
+
+        Cursor rssCursor = db.rawQuery("SELECT * FROM rss_feeder ORDER BY _id ASC", null);
+        NewsAdapter newsAdapter = new NewsAdapter(getActivity(), rssCursor);
+        listView.setAdapter(newsAdapter);
+        progressBar.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+
     }
 
     private final ResultReceiver resultReceiver = new ResultReceiver(new Handler()) {

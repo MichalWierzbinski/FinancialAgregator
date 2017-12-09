@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name="com.example.axis_of_no_talents.financialagregator.RssService"></service>
         <activity android:name=".ItemDetailsActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
