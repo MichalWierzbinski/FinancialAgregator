@@ -18,7 +18,7 @@ import java.util.List;
 public class RssService extends IntentService {
     public static final String TAG = "[RssService]";
 
-    private static final String RSS_LINK = "http://www.rssmix.com/u/8237847/rss.xml";
+    private static final String RSS_LINK = "http://www.rssmix.com/u/8266550/rss.xml";
     public static final String ITEMS = "items";
     public static final String RECEIVER = "receiver";
 
